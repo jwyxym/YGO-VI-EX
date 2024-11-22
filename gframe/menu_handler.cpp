@@ -8,6 +8,7 @@
 #include "image_manager.h"
 #include "sound_manager.h"
 #include "game.h"
+#include <fstream>
 
 namespace ygo {
 
@@ -26,6 +27,7 @@ void UpdateDeck() {
 		BufferIO::WriteInt32(pdeck, deckManager.current_deck.side[i]->first);
 	DuelClient::SendBufferToServer(CTOS_UPDATE_DECK, deckbuf, pdeck - deckbuf);
 }
+
 bool MenuHandler::OnEvent(const irr::SEvent& event) {
 	if(mainGame->dField.OnCommonEvent(event))
 		return false;
@@ -69,36 +71,96 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_OTHER: {
+				mainGame->Game::LoadExpansions();
 				mainGame->btnSEM->setEnabled(true);
-				mainGame->btnTakeout2->setEnabled(true);
-				mainGame->btnLantern->setEnabled(true);
-				mainGame->btnVI->setEnabled(true);
-				mainGame->btnFOX->setEnabled(true);
-				mainGame->btnTakeout1->setEnabled(true);
-				mainGame->btnWBO->setEnabled(true);
-				mainGame->btnDC->setEnabled(true);
-				mainGame->btnDLD->setEnabled(true);
-				mainGame->btnTG->setEnabled(true);
-				mainGame->btnYST->setEnabled(true);
-				mainGame->btnMJ->setEnabled(true);
-				mainGame->btnDV->setEnabled(true);
+				mainGame->btnCards->setEnabled(true);
+				mainGame->btnWindBot->setEnabled(true);
+				mainGame->btnYgo->setEnabled(true);
 				mainGame->btnOtherExit->setEnabled(true);
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wOther);
 				break;
 			}
 			case BUTTON_SEM: {
-                system("powershell iwr -Uri https://cdn02.moecube.com:444/ygopro-super-pre/archive/ygopro-super-pre.ypk -Outfile %USERPROFILE%\\Downloads\\ygopro-super-pre.ypk");
-				system("xcopy /E %USERPROFILE%\\Downloads\\ygopro-super-pre.ypk .\\expansions\\");
-				system("del %USERPROFILE%\\Downloads\\ygopro-super-pre.ypk");
-				mainGame->stACMessage->setText(dataManager.GetSysString(1541));
-				mainGame->PopupElement(mainGame->wACMessage, 30);
+				std::string batContent =
+					"@echo off\n"
+					"@color 0e\n"
+					"if exist expansions\\ygopro-super-pre.ypk (del expansions\\ygopro-super-pre.ypk)\n"
+					"wget -t 0 -P ./expansions -c https://cdn02.moecube.com:444/ygopro-super-pre/archive/ygopro-super-pre.ypk\n"
+					"exit -b";
+				std::ofstream batFile("download.bat");
+				if (batFile.is_open()) {
+					batFile << batContent;
+					batFile.close();
+				}
+				system("start download.bat");
 				return true;
 				break;
 			}
-			case BUTTON_DV: {
-                mainGame->btnDVClose->setEnabled(true);
-				mainGame->ShowElement(mainGame->wDV);
+			case BUTTON_CARDS: {
+				std::string batContent =
+					"@echo off\n"
+					"@color 0e\n"
+					"rd /s /q ygo-vi-ex-cards-master\n"
+					"del master.zip\n"
+					"wget https://gitee.com/jwyxym/ygo-vi-ex-cards/repository/archive/master.zip\n"
+					"unzip master.zip\n"
+					"xcopy /Y /E ygo-vi-ex-cards-master .\n"
+					"rd /s /q ygo-vi-ex-cards-master\n"
+					"del master.zip\n"
+					"start ygopro.exe\n"
+					"exit -b";
+				std::ofstream batFile("download.bat");
+				if (batFile.is_open()) {
+					batFile << batContent;
+					batFile.close();
+				}
+				mainGame->device->closeDevice();
+				system("start download.bat");
+				return true;
+				break;
+			}
+			case BUTTON_WINDBOT: {
+				std::string batContent =
+					"@echo off\n"
+					"@color 0e\n"
+					"rd /s /q ygo-vi-ex-windbot-master\n"
+					"del master.zip\n"
+					"wget https://gitee.com/jwyxym/ygo-vi-ex-windbot/repository/archive/master.zip\n"
+					"unzip master.zip\n"
+					"xcopy /Y /E ygo-vi-ex-windbot-master .\n"
+					"rd /s /q ygo-vi-ex-windbot-master\n"
+					"del master.zip\n"
+					"start ygopro.exe\n"
+					"exit -b";
+				std::ofstream batFile("download.bat");
+				if (batFile.is_open()) {
+					batFile << batContent;
+					batFile.close();
+				}
+				mainGame->device->closeDevice();
+				system("start download.bat");
+				return true;
+				break;
+			}
+			case BUTTON_YGO: {
+				std::string batContent =
+					"@echo off\n"
+					"@color 0e\n"
+					"wget -t 0 -P download -c https://gitee.com/jwyxym/ygo-vi-ex-release/raw/master/ygopro.exe\n"
+					"del ygopro.exe\n"
+					"xcopy /Y /E download .\n"
+					"rd /s /q download\n"
+					"start ygopro.exe\n"
+					"exit -b";
+				std::ofstream batFile("download.bat");
+				if (batFile.is_open()) {
+					batFile << batContent;
+					batFile.close();
+				}
+				mainGame->device->closeDevice();
+				system("start download.bat");
+				return true;
 				break;
 			}
 			case BUTTON_DV_CLOSE:{
@@ -107,76 +169,12 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					mainGame->device->closeDevice();
 				break;
 			}
-			case BUTTON_TAKEOUT1: {
-                system("start https://mycard.world/ygopro/arena/#/cards");
-				return true;
-				break;
-			}
-			case BUTTON_TAKEOUT2: {
-                system("start https://www.starbucks.com.cn/");
-				return true;
-				break;
-			}
-			case BUTTON_LANTERN: {
-				system("start .\\download\\Code.jpg");
-				wchar_t amiya[2048];
-				myswprintf(amiya, L"%ls", L"./download/amiya.jpg");
-				CopyFile(amiya, L"./textures/bg/amiya.jpg", FALSE);
-				mainGame->stACMessage->setText(dataManager.GetSysString(1911));
-				mainGame->PopupElement(mainGame->wACMessage, 300);
-				return true;
-				break;
-			}
-			case BUTTON_VI: {
-                system("start https://ygobbs2.com/t/%E3%80%90%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB%E3%80%91ygo-vi-ex%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90%E9%9B%86%E4%B8%AD%E4%B8%8B%E8%BD%BD%E8%B4%B4/233171");
-				return true;
-				break;
-			}
-			case BUTTON_FOX: {
-                system("start https://ygobbs2.com/t/%E5%BE%81%E9%9B%86%E4%B8%80%E4%BA%9Bygopro%E7%9A%84%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE/235347/5");
-				return true;
-				break;
-			}
-			case BUTTON_WBO: {
-                system("start .\\download\\note.txt");
-				return true;
-				break;
-			}
-			case BUTTON_DIYHEAD: {
-                system("start https://picrew.me/");
-				return true;
-				break;
-			}
-			case BUTTON_DC: {
-                system("start https://charat.me/genesis/");
-				return true;
-				break;
-			}
-			case BUTTON_TG: {
-                system("start https://www.yugioh-card.com/japan/");
-				return true;
-				break;
-			}
-			case BUTTON_DLD: {
-                system("start .\\download\\YGO-VI-EX-Downloader.exe");
-				return true;
-				break;
-			}
-			case BUTTON_YST: {
-                system("start https://yugioh-list.com/decks");
-				return true;
-				break;
-			}
 			case BUTTON_OTHER_EXIT: {
+				mainGame->Game::LoadExpansions();
 				mainGame->HideElement(mainGame->wOther);
 				mainGame->ShowElement(mainGame->wMainMenu);
 				if(exit_on_return)
 					mainGame->device->closeDevice();
-				break;
-			}
-			case BUTTON_MJ: {
-                system("start https://www.pixiv.net/users/12786607");
-				return true;
 				break;
 			}
 			case BUTTON_SYS: {
@@ -257,6 +255,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_LAN_MODE: {
+				mainGame->Game::LoadExpansions();
 				mainGame->btnCreateHost->setEnabled(true);
 				mainGame->btnJoinHost->setEnabled(true);
 				mainGame->btnJoinCancel->setEnabled(true);
@@ -689,6 +688,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_REPLAY_MODE: {
+				mainGame->Game::LoadExpansions();
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wReplay);
 				mainGame->ebRepStartTurn->setText(L"1");
@@ -697,6 +697,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SINGLE_MODE: {
+				mainGame->Game::LoadExpansions();
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wSinglePlay);
 				mainGame->RefreshSingleplay();
@@ -865,6 +866,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_DECK_EDIT: {
+				mainGame->Game::LoadExpansions();
 				mainGame->ClearChatMsg();
 				mainGame->RefreshDeck(mainGame->cbDBDecks);
 				if(open_file && deckManager.LoadDeck(open_file_name)) {

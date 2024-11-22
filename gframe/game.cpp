@@ -172,25 +172,15 @@ bool Game::Initialize() {
 	btnOther = env->addButton(rect<s32>(10, 170, 270, 200), wMainMenu, BUTTON_OTHER, dataManager.GetSysString(1422));
 	btnSYS = env->addButton(rect<s32>(10, 205, 270, 235), wMainMenu, BUTTON_SYS, dataManager.GetSysString(1207));
 	//other
-	wOther = env->addWindow(rect<s32>(370, 40, 650, 600), false, dataManager.GetSysString(1422));
+	wOther = env->addWindow(rect<s32>(370, 200, 650, 410), false, dataManager.GetSysString(1422));
 	wOther->getCloseButton()->setVisible(false);
 	wOther->setVisible(false);
 	wOther->setDraggable(false);
 	btnSEM = env->addButton(rect<s32>(10, 30, 270, 60), wOther, BUTTON_SEM, dataManager.GetSysString(1423));
-	btnTakeout1 = env->addButton(rect<s32>(10, 65, 270, 95), wOther, BUTTON_TAKEOUT1, dataManager.GetSysString(1424));
-	btnTakeout2 = env->addButton(rect<s32>(10, 100, 270, 130), wOther, BUTTON_TAKEOUT2, dataManager.GetSysString(1425));
-	btnLantern = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_LANTERN, dataManager.GetSysString(1426));
-	btnVI = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_VI, dataManager.GetSysString(1440));
-	btnFOX = env->addButton(rect<s32>(10, 205, 270, 235), wOther, BUTTON_FOX, dataManager.GetSysString(1441));
-	btnWBO = env->addButton(rect<s32>(10, 240, 270, 270), wOther, BUTTON_WBO, dataManager.GetSysString(1439));
-	btnDC = env->addButton(rect<s32>(10, 275, 270, 305), wOther, BUTTON_DC, dataManager.GetSysString(1448));
-	btnDLD = env->addButton(rect<s32>(10, 310, 270, 340), wOther, BUTTON_DLD, dataManager.GetSysString(1447));
-	btnTG = env->addButton(rect<s32>(10, 345, 270, 375), wOther, BUTTON_TG, dataManager.GetSysString(1449));
-	btnYST = env->addButton(rect<s32>(10, 380, 270, 410), wOther, BUTTON_YST, dataManager.GetSysString(1536));
-	btnMJ = env->addButton(rect<s32>(10, 415, 270, 445), wOther, BUTTON_MJ, dataManager.GetSysString(1513));
-	btnDIY = env->addButton(rect<s32>(10, 450, 270, 480), wOther, BUTTON_DIYHEAD, dataManager.GetSysString(1539));
-	btnDV = env->addButton(rect<s32>(10, 485, 270, 515), wOther, BUTTON_DV, dataManager.GetSysString(1537));
-	btnOtherExit = env->addButton(rect<s32>(10, 520, 270, 550), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
+	btnCards = env->addButton(rect<s32>(10, 65, 270, 95), wOther, BUTTON_CARDS, dataManager.GetSysString(1424));
+	btnWindBot = env->addButton(rect<s32>(10, 100, 270, 130), wOther, BUTTON_WINDBOT, dataManager.GetSysString(1425));
+	btnYgo = env->addButton(rect<s32>(10, 135, 270, 165), wOther, BUTTON_YGO, dataManager.GetSysString(1426));
+	btnOtherExit = env->addButton(rect<s32>(10, 170, 270, 200), wOther, BUTTON_OTHER_EXIT, dataManager.GetSysString(1210));
 	//system setting
 	wSystem = env->addWindow(rect<s32>(212, 140, 817, 420), false, dataManager.GetSysString(1207));
 	wSystem->getCloseButton()->setVisible(false);
@@ -2076,7 +2066,7 @@ void Game::OnResize() {
 	//env->getSkin()->setFont(guiFont);
 
 	wMainMenu->setRelativePosition(ResizeWin(370, 200, 650, 485));
-	wOther->setRelativePosition(ResizeWin(370, 40, 650, 600));
+	wOther->setRelativePosition(ResizeWin(370, 200, 650, 410));
 	wSystem->setRelativePosition(ResizeWin(212, 140, 817, 420));
 	wHDS->setRelativePosition(ResizeWin(342, 235, 682, 395));
 	wCRS->setRelativePosition(ResizeWin(269.5, 187.5, 774.5, 452.5));

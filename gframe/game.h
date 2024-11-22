@@ -361,20 +361,10 @@ public:
 	//other
 	irr::gui::IGUIWindow* wOther;
 	irr::gui::IGUIButton* btnSEM;
-	irr::gui::IGUIButton* btnTakeout1;
-	irr::gui::IGUIButton* btnTakeout2;
+	irr::gui::IGUIButton* btnCards;
+	irr::gui::IGUIButton* btnWindBot;
+	irr::gui::IGUIButton* btnYgo;
 	irr::gui::IGUIButton* btnOtherExit;
-	irr::gui::IGUIButton* btnLantern;
-	irr::gui::IGUIButton* btnVI;
-	irr::gui::IGUIButton* btnFOX;
-	irr::gui::IGUIButton* btnWBO;
-	irr::gui::IGUIButton* btnDC;
-	irr::gui::IGUIButton* btnDLD;
-	irr::gui::IGUIButton* btnTG;
-	irr::gui::IGUIButton* btnYST;
-	irr::gui::IGUIButton* btnMJ;
-	irr::gui::IGUIButton* btnDV;
-	irr::gui::IGUIButton* btnDIY;
 	//system setting
 	irr::gui::IGUIWindow* wSystem;
 	irr::gui::IGUICheckBox* chkMRandom;
@@ -883,36 +873,6 @@ extern Game* mainGame;
 #define BUTTON_RENAME_DECK_SAVE			387
 #define BUTTON_RENAME_DECK_CANCEL		388
 
-#define BUTTON_SEM						389
-#define BUTTON_TAKEOUT1					390
-#define BUTTON_TAKEOUT2					391
-#define BUTTON_LANTERN					392
-#define BUTTON_OTHER_EXIT				393
-#define BUTTON_VI						403
-#define BUTTON_FOX						404
-#define BUTTON_WBO						405
-#define BUTTON_TG						429
-#define BUTTON_DC						430
-#define BUTTON_DLD						431
-#define BUTTON_YST						432
-#define BUTTON_MJ						433
-#define BUTTON_DV						434
-#define BUTTON_DV_CLOSE					435
-#define BUTTON_DIYHEAD					436
-
-
-#define BUTTON_SERVER_CHOOSE			394
-#define BUTTON_233						395
-#define BUTTON_23333					396
-#define BUTTON_7210						397
-#define BUTTON_222						398
-#define BUTTON_765						399
-#define BUTTON_JP						400
-#define BUTTON_NK						401
-#define BUTTON_SC_EXIT					402
-#define BUTTON_SP						521
-#define BUTTON_888						522
-
 #define BUTTON_ROOM_CODE				501
 #define BUTTON_RM1						502
 #define BUTTON_RM2						503
@@ -933,6 +893,26 @@ extern Game* mainGame;
 #define BUTTON_RMAI						518
 #define BUTTON_RMA						519
 #define BUTTON_RM_EXIT					520
+
+#define BUTTON_SERVER_CHOOSE			550
+#define BUTTON_233						551
+#define BUTTON_23333					552
+#define BUTTON_7210						553
+#define BUTTON_222						554
+#define BUTTON_765						555
+#define BUTTON_JP						556
+#define BUTTON_NK						557
+#define BUTTON_SC_EXIT					558
+#define BUTTON_SP						559
+#define BUTTON_888						560
+
+#define BUTTON_DV_CLOSE					570
+
+#define BUTTON_SEM						580
+#define BUTTON_CARDS					581
+#define BUTTON_WINDBOT					582
+#define BUTTON_YGO						583
+#define BUTTON_OTHER_EXIT				585
 
 #define BUTTON_SYS						406
 #define BUTTON_SYS_EXIT					407
