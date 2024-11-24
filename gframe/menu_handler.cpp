@@ -156,10 +156,10 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				std::string batContent =
 					"@echo off\n"
 					"@color 0e\n"
-					"wget -t 0 -P download -c https://gitee.com/jwyxym/ygo-vi-ex-release/raw/master/ygopro.exe\n"
+					"wget -t 0 -P download_viex -c https://gitee.com/jwyxym/ygo-vi-ex-release/raw/master/ygopro.exe\n"
 					"del ygopro.exe\n"
-					"xcopy /Y /E download .\n"
-					"rd /s /q download\n"
+					"xcopy /Y /E download_viex .\n"
+					"rd /s /q download_viex\n"
 					"start ygopro.exe\n"
 					"exit -b";
 				std::ofstream batFile("download.bat");
