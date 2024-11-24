@@ -71,7 +71,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_OTHER: {
-				mainGame->Game::LoadExpansions();
+				mainGame->Game::ReLoadExpansions();
 				mainGame->btnSEM->setEnabled(true);
 				mainGame->btnCards->setEnabled(true);
 				mainGame->btnWindBot->setEnabled(true);
@@ -93,6 +93,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					batFile << batContent;
 					batFile.close();
 				}
+				mainGame->device->closeDevice();
 				system("start download.bat");
 				return true;
 				break;
@@ -170,7 +171,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_OTHER_EXIT: {
-				mainGame->Game::LoadExpansions();
+				mainGame->Game::ReLoadExpansions();
 				mainGame->HideElement(mainGame->wOther);
 				mainGame->ShowElement(mainGame->wMainMenu);
 				if(exit_on_return)
@@ -255,7 +256,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_LAN_MODE: {
-				mainGame->Game::LoadExpansions();
+				mainGame->Game::ReLoadExpansions();
 				mainGame->btnCreateHost->setEnabled(true);
 				mainGame->btnJoinHost->setEnabled(true);
 				mainGame->btnJoinCancel->setEnabled(true);
@@ -688,7 +689,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_REPLAY_MODE: {
-				mainGame->Game::LoadExpansions();
+				mainGame->Game::ReLoadExpansions();
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wReplay);
 				mainGame->ebRepStartTurn->setText(L"1");
@@ -697,7 +698,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_SINGLE_MODE: {
-				mainGame->Game::LoadExpansions();
+				mainGame->Game::ReLoadExpansions();
 				mainGame->HideElement(mainGame->wMainMenu);
 				mainGame->ShowElement(mainGame->wSinglePlay);
 				mainGame->RefreshSingleplay();
@@ -866,7 +867,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			case BUTTON_DECK_EDIT: {
-				mainGame->Game::LoadExpansions();
+				mainGame->Game::ReLoadExpansions();
 				mainGame->ClearChatMsg();
 				mainGame->RefreshDeck(mainGame->cbDBDecks);
 				if(open_file && deckManager.LoadDeck(open_file_name)) {
