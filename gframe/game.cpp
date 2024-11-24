@@ -1199,7 +1199,7 @@ void Game::ReLoadExpansions() {
 		dataManager._datas.erase(code);
 	}
 	dataManager._expansionDatas.clear();
-	return LoadExpansions();
+	LoadExpansions();
 }
 
 void Game::LoadExpansions() {
@@ -1212,6 +1212,24 @@ void Game::LoadExpansions() {
 		if(!isdir && wcsrchr(name, '.') && (!mywcsncasecmp(wcsrchr(name, '.'), L".zip", 4) || !mywcsncasecmp(wcsrchr(name, '.'), L".ypk", 4))) {
 			wchar_t fpath[1024];
 			myswprintf(fpath, L"./expansions/%ls", name);
+#ifdef _WIN32
+			dataManager.FileSystem->addFileArchive(fpath, true, false, EFAT_ZIP);
+#else
+			char upath[1024];
+			BufferIO::EncodeUTF8(fpath, upath);
+			dataManager.FileSystem->addFileArchive(upath, true, false, EFAT_ZIP);
+#endif
+		}
+	});
+	FileSystem::TraversalDir(L"./expansions/ygopro-super-pre", [](const wchar_t* name, bool isdir) {
+		if(!isdir && wcsrchr(name, '.') && !mywcsncasecmp(wcsrchr(name, '.'), L".cdb", 4)) {
+			wchar_t fpath[1024];
+			myswprintf(fpath, L"./expansions/ygopro-super-pre/%ls", name);
+			dataManager.LoadDB(fpath, true);
+		}
+		if(!isdir && wcsrchr(name, '.') && (!mywcsncasecmp(wcsrchr(name, '.'), L".zip", 4) || !mywcsncasecmp(wcsrchr(name, '.'), L".ypk", 4))) {
+			wchar_t fpath[1024];
+			myswprintf(fpath, L"./expansions/ygopro-super-pre/%ls", name);
 #ifdef _WIN32
 			dataManager.FileSystem->addFileArchive(fpath, true, false, EFAT_ZIP);
 #else
